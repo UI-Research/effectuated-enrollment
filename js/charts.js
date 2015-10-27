@@ -169,8 +169,8 @@ function barchart(container_width) {
     } else {
         var barchart_aspect_height = 0.3;
         var margin = {
-            top: 5,
-            right: 5,
+            top: 15,
+            right: 15,
             bottom: 25,
             left: 35
         };
