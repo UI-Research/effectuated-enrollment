@@ -103,7 +103,7 @@ function barchart(container_width) {
                 return 0.8 * y.rangeBand() + y(d.abbrev);
             })
             .attr("x", function (d) {
-                return x(0) - (15 * (Math.abs(d[VAL])) / d[VAL]) -5;
+                return x(0) - (15 * (Math.abs(d[VAL])) / d[VAL]) - 5;
             })
             .text(function (d) {
                 return d.abbrev;
@@ -192,10 +192,10 @@ function barchart(container_width) {
                 return d.abbrev;
             }));
 
-        /*        var xAxis = d3.svg.axis()
-                    .scale(x)
-                    .tickSize(0)
-                    .orient("bottom");*/
+        var xAxis = d3.svg.axis()
+            .scale(x)
+            .tickSize(0)
+            .orient("bottom")
 
         var y = d3.scale.linear()
             .range([height, 0]);
@@ -240,9 +240,9 @@ function barchart(container_width) {
             .attr("class", "abbrevs");
 
         neglabels.append("text")
-            .attr("text-anchor", "center")
+            .attr("text-anchor", "middle")
             .attr("x", function (d) {
-                return x(d.abbrev) + 0.4 * x.rangeBand();
+                return x(d.abbrev) + 0.5 * x.rangeBand();
             })
             .attr("y", function (d) {
                 return y(0) + (10 * (Math.abs(d[VAL])) / d[VAL]) + 2;
