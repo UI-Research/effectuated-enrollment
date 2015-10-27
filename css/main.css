@@ -65,3 +65,12 @@
     font-size: 10px;
     text-align: center;
 }
+
+.map-tooltip {
+    padding: 4px;
+    background: rgba(255, 255, 255, 0.8);
+    color: #000;
+    border: 1px solid #aaa;
+    pointer-events: none;
+    font-size: 12px;
+}

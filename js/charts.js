@@ -12,6 +12,41 @@ var LABELS = ["State-based marketplace", "State-based using healthcare.gov", "Fe
 var FORMATTER = d3.format("%");
 var numticks = 6;
 
+
+d3.helper = {};
+
+d3.helper.tooltip = function (accessor) {
+    return function (selection) {
+        var tooltipDiv;
+        var bodyNode = d3.select('body').node();
+        selection.on("mouseover", function (d, i) {
+                // Clean up lost tooltips
+                d3.select('body').selectAll('div.tooltip').remove();
+                // Append tooltip
+                tooltipDiv = d3.select('body').append('div').attr('class', 'map-tooltip');
+                var absoluteMousePos = d3.mouse(bodyNode);
+                tooltipDiv.style('left', (absoluteMousePos[0] - 10) + 'px')
+                    .style('top', (absoluteMousePos[1] - 50) + 'px')
+                    .style('position', 'absolute')
+                    .style('z-index', 1001);
+                // Add text using the accessor function
+                var tooltipText = accessor(d, i) || '';
+            })
+            .on('mousemove', function (d, i) {
+                // Move tooltip
+                var absoluteMousePos = d3.mouse(bodyNode);
+
+                tooltipDiv.style('left', (absoluteMousePos[0] - 10) + 'px')
+                    .style('top', (absoluteMousePos[1] - 50) + 'px');
+                var tooltipText = accessor(d, i) || '';
+                tooltipDiv.html(tooltipText);
+            })
+            .on("mouseout", function (d, i) {
+                tooltipDiv.remove();
+            });
+    };
+};
+
 function barchart(container_width) {
 
     var color = d3.scale.ordinal()
@@ -131,27 +166,12 @@ function barchart(container_width) {
             .attr("y", function (d) {
                 return y(d.abbrev);
             })
-            .attr("height", y.rangeBand());
-        /*            .on("click", function (d) {
-                        dispatch.clickState(this.id);
-                    })
-                    .on("mouseover", function (d) {
-                        if (isIE != false) {
-                            d3.selectAll(".hovered")
-                                .classed("hovered", false);
-                            d3.selectAll("#" + this.id)
-                                .classed("hovered", true)
-                                .moveToFront();
-                            tooltip(this.id);
-                            this.parentNode.appendChild(this);
-                            console.log("I'm using the worst browser test4");
-                        } else {
-                            dispatch.hoverState(this.id);
-                        }
-                    })
-                    .on("mouseout", function (d) {
-                        dispatch.dehoverState(this.id);
-                    });*/
+            .attr("height", y.rangeBand())
+            .call(d3.helper.tooltip(
+                function (d, i) {
+                    return d.state + "<br />" + FORMATTER(d[VAL]);
+                }
+            ));
 
         //manual line for axis at 0
         svg.append("g")
@@ -170,9 +190,9 @@ function barchart(container_width) {
         var barchart_aspect_height = 0.3;
         var margin = {
             top: 15,
-            right: 15,
+            right: 50,
             bottom: 25,
-            left: 35
+            left: 45
         };
 
         var width = container_width - margin.left - margin.right,
@@ -191,11 +211,6 @@ function barchart(container_width) {
             .domain(data.map(function (d) {
                 return d.abbrev;
             }));
-
-        var xAxis = d3.svg.axis()
-            .scale(x)
-            .tickSize(0)
-            .orient("bottom")
 
         var y = d3.scale.linear()
             .range([height, 0]);
@@ -273,26 +288,12 @@ function barchart(container_width) {
             })
             .attr("height", function (d) {
                 return Math.abs(y(0) - (y(d[VAL])));
-            });
-        /*            .on("click", function (d) {
-                        dispatch.clickState(this.id);
-                    })
-                    .on("mouseover", function (d) {
-                        if (isIE != false) {
-                            d3.selectAll(".hovered")
-                                .classed("hovered", false);
-                            d3.selectAll("#" + this.id)
-                                .classed("hovered", true)
-                                .moveToFront();
-                            tooltip(this.id);
-                            this.parentNode.appendChild(this);
-                        } else {
-                            dispatch.hoverState(this.id);
-                        }
-                    })
-                    .on("mouseout", function (d) {
-                        dispatch.dehoverState(this.id);
-                    });*/
+            })
+            .call(d3.helper.tooltip(
+                function (d, i) {
+                    return d.state + "<br />" + FORMATTER(d[VAL]);
+                }
+            ));
 
 
         //manual line for axis at 0
