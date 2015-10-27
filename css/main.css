@@ -78,3 +78,30 @@
     pointer-events: none;
     font-size: 12px;
 }
+
+.footnote {
+    font-size: 12px;
+    padding-bottom: 2em;
+}
+
+
+.footnote a {
+    text-decoration: none;
+    color: #1696d2;
+}
+
+a.tag {
+    font-size: 9px;
+    float: right;
+    font-weight: 900;
+    letter-spacing: 1.5pt;
+    text-align: right;
+    bottom: 0px;
+    text-decoration: none;
+    color: inherit;
+    padding-top: 1em;
+}
+
+#urban {
+    color: #1696d2;
+}
