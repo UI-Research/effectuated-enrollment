@@ -40,6 +40,10 @@
     display: none;
 }
 
+.bar:hover {
+    fill: #fdbf11;
+}
+
 .axis-show path,
 .axis-show line {
     fill: none;

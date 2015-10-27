@@ -192,7 +192,7 @@ function barchart(container_width) {
             top: 15,
             right: 50,
             bottom: 25,
-            left: 45
+            left: 25
         };
 
         var width = container_width - margin.left - margin.right,
