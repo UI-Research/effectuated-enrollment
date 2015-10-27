@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Effectuated Enrollment</title>
+
+
+    <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="lib/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/urban-text.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+
+</head>
+
+<body>
+
+    <h1>Effectuated Enrollment % Change Relative to 2015 Plan Selections</h1>
+    <div id="legend"></div>
+    <div id="graphic" class="graph"></div>
+
+    <script src="lib/jquery.min.js"></script>
+    <script src="lib/bootstrap.min.js"></script>
+    <script src="lib/d3.min.js"></script>
+    <script src="lib/modernizr.svg.min.js"></script>
+    <script src="lib/pym.min.js"></script>
+    <script src="js/charts.js"></script>
+
+    <script>
+        $(window).load(function () {
+            if (Modernizr.svg) {
+                d3.csv(main_data_url, function (error, rates) {
+                    data = rates;
+                    VAL = "eselect";
+                    pymChild = new pym.Child({
+                        renderCallback: barchart
+                    });
+                });
+            } else {
+                pymChild = new pym.Child({});
+            }
+        });
+
+        var pymChild = new pym.Child();
+    </script>
+
+</body>
+
+</html>

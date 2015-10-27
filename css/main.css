@@ -1,0 +1,67 @@
+.tt {
+    margin-bottom: 1em;
+}
+
+.tt-value {
+    display: inline-block;
+}
+
+.tt-name,
+.tt-title {
+    font-size: 20px;
+    margin-bottom: 4px;
+}
+
+.tt-name.tt-value {
+    display: inline-block;
+    font-size: 14px;
+}
+
+.axis,
+.axis-show {
+    font-size: 12px;
+    color: #333;
+}
+
+.axis path {
+    display: none;
+}
+
+.axis line {
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+
+.axis .minor line {
+    stroke: #efefef;
+}
+
+.axis-show text {
+    display: none;
+}
+
+.axis-show path,
+.axis-show line {
+    fill: none;
+    stroke-width: 1px;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+
+.zeroline {
+    stroke: #000;
+    stroke-width: 1;
+    fill: none;
+    shape-rendering: crispEdges;
+}
+
+.legend {
+    font-size: 12px;
+    fill: #333;
+}
+
+.abbrevs {
+    font-family: Verdana;
+    font-size: 10px;
+    text-align: center;
+}
