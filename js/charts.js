@@ -1,4 +1,4 @@
-var MOBILE_THRESHOLD = 600;
+var MOBILE_THRESHOLD = 700;
 var main_data_url = "data/percents.csv";
 var isMobile = false;
 var VAL,
