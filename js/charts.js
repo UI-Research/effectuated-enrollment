@@ -76,9 +76,9 @@ function barchart(container_width) {
             .ticks(5)
             .orient("top");
 
-        var gy = svg.append("g")
-            .attr("class", "y axis")
-            .call(yAxis);
+        /*        var gy = svg.append("g")
+                    .attr("class", "y axis")
+                    .call(yAxis);*/
 
         var gx = svg.append("g")
             .attr("transform", "translate(0," + height + ")")
@@ -89,6 +89,25 @@ function barchart(container_width) {
                 return d;
             })
             .classed("minor", true);
+
+        var neglabels = svg.selectAll("g.neglabels")
+            .data(data)
+            .enter().append("g")
+            .attr("class", "abbrevs");
+
+        neglabels.append("text")
+            .attr('id', function (d) {
+                return "v" + d.abbrev;
+            })
+            .attr("y", function (d) {
+                return 0.8 * y.rangeBand() + y(d.abbrev);
+            })
+            .attr("x", function (d) {
+                return x(0) - (15 * (Math.abs(d[VAL])) / d[VAL]) -5;
+            })
+            .text(function (d) {
+                return d.abbrev;
+            });
 
         var pctbar = svg.selectAll(".bar")
             .data(data)
@@ -134,6 +153,19 @@ function barchart(container_width) {
                         dispatch.dehoverState(this.id);
                     });*/
 
+        //manual line for axis at 0
+        svg.append("g")
+            .append("line")
+            .attr("class", "zeroline")
+            .attr("x1", function (d) {
+                return x(0);
+            })
+            .attr("x2", function (d) {
+                return x(0);
+            })
+            .attr("y1", height)
+            .attr("y2", 0);
+
     } else {
         var barchart_aspect_height = 0.3;
         var margin = {
@@ -160,10 +192,10 @@ function barchart(container_width) {
                 return d.abbrev;
             }));
 
-        var xAxis = d3.svg.axis()
-            .scale(x)
-            .tickSize(0)
-            .orient("bottom");
+        /*        var xAxis = d3.svg.axis()
+                    .scale(x)
+                    .tickSize(0)
+                    .orient("bottom");*/
 
         var y = d3.scale.linear()
             .range([height, 0]);
@@ -261,6 +293,20 @@ function barchart(container_width) {
                     .on("mouseout", function (d) {
                         dispatch.dehoverState(this.id);
                     });*/
+
+
+        //manual line for axis at 0
+        svg.append("g")
+            .append("line")
+            .attr("class", "zeroline")
+            .attr("y1", function (d) {
+                return y(0);
+            })
+            .attr("y2", function (d) {
+                return y(0);
+            })
+            .attr("x1", 0)
+            .attr("x2", width);
     }
     if (VAL == "eselect") {
         function legend() {
@@ -284,7 +330,7 @@ function barchart(container_width) {
                     .attr("height", height + margin.top + margin.bottom)
                     .append("g")
                     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-                
+
                 var lp_w = 200,
                     ls_w = 30,
                     ls_h = 15;
